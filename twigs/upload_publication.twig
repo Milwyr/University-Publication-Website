@@ -1,0 +1,34 @@
+{% extends 'page.twig' %}
+
+{% import 'form.twig' as f %}
+
+{% block title %}
+	{{context.user.login}} Upload
+{% endblock title %}
+
+{% block pageheader %}
+{% endblock pageheader %}
+
+{% block main %}
+    <section class="row">
+        <div class="col-md-offset-2 col-md-10">
+			<form action="#" method="post" enctype="multipart/form-data">
+				<input type="file" name="file_to_upload" accept=".txt, .docx">
+				Author: <input type="text" name="author"><br>
+				Publication Year: <input type="text" name="publication-year"><br>
+				Description:
+				<textarea rows="5" cols="50" name="description">
+				</textarea><br>
+				Restriction: <input type="text" name="restriction"><br>
+				Information about the user:
+				<textarea rows="5" cols="50" name="author-information">
+                </textarea><br>
+				<button type="submit" class="btn btn-primary btn-lg">Upload</button>
+			</form>
+        </div>
+    </section>
+{% endblock main %}
+
+
+{% block pagefooter %}
+{% endblock pagefooter %}

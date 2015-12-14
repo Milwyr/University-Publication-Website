@@ -23,7 +23,7 @@
 	        	$allowedExtensions = array('docx', 'pdf', 'txt');
 	        	$extensions = explode('.', $_FILES['file_to_upload']['name']);
 	        	$extension = end($extensions);
-	        	
+
 	        	if (!in_array($extension, $allowedExtensions))
 	        	{
 	        		echo 'Wrong file type';
@@ -34,30 +34,30 @@
 					{
 						$target_directory = "assets/upload/".$author."/".$year."/";
 					}
-	
+
 	                if (!file_exists($target_directory))
 	                {
 	                	mkdir($target_directory, 0777, true);
 	                }
-	
+
 	                $target_file_path = $target_directory.basename($_FILES['file_to_upload']['name']);
-	                
+
 	                move_uploaded_file($_FILES['file_to_upload']['tmp_name'], $target_file_path);
-	
-					$ufile = R::dispense('file');
-					$ufile->directory = $target_directory;
-					$ufile->name = $_FILES['file_to_upload']['name'];
-					$ufile->author = $_POST['author'];
-					$ufile->year = $_POST['publication-year'];
-					$ufile->description = $_POST['description'];
-					$ufile->restriction = $_POST['restriction'];
-					$ufile->information = $_POST['author-information'];
-					$ufile->size = $_FILES['file_to_upload']['size']/1024; // File size in kB
-					$ufid = R::store($ufile);
+
+					$upload_publication = R::dispense('publication');
+					$upload_publication->directory = $target_directory;
+					$upload_publication->name = $_FILES['file_to_upload']['name'];
+					$upload_publication->author = $_POST['author'];
+					$upload_publication->year = $_POST['publication-year'];
+					$upload_publication->description = $_POST['description'];
+					$upload_publication->restriction = $_POST['restriction'];
+					$upload_publication->information = $_POST['author-information'];
+					$upload_publication->size = $_FILES['file_to_upload']['size']/1024; // File size in kB
+					$upid = R::store($upload_publication);
 	            }
 	        }
-	
-	            return 'upload.twig';
+
+	        return 'upload_publication.twig';
 	    }
 	}
 ?>

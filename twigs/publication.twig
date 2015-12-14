@@ -1,0 +1,47 @@
+{% extends 'page.twig' %}
+
+{% import 'form.twig' as f %}
+
+{% block title %}
+	{{context.user.login}}'s' publication
+{% endblock title %}
+
+{% block pageheader %}
+{% endblock pageheader %}
+
+{% block main %}
+        <div class="container">
+          <h2>Publication List</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Publication Name</th>
+                <th>Author</th>
+                <th>Size</th>
+                <th>Year</th>
+                <th>Restriction</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in publications %}
+                <tr>
+                  <td>{{p.name}}</td>
+                  <td>{{p.author}}</td>
+                  <td>{{p.size}} KB</td>
+                  <td>{{p.year}}</td>
+                  <td>{{p.restriction}}</td>
+                  <td>
+                    <a href="{{p.directory}}{{p.name}}" download>
+						<img src="assets/images/download-24px.png">
+					</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+{% endblock main %}
+
+{% block pagefooter %}
+{% endblock pagefooter %}
