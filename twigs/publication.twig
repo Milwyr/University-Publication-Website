@@ -15,6 +15,7 @@
           <table class="table">
             <thead>
               <tr>
+			  	<th></th>
                 <th>Publication Name</th>
                 <th>Author</th>
                 <th>Size</th>
@@ -26,6 +27,20 @@
             <tbody>
               {% for p in publications %}
                 <tr>
+					{% if p.extension == 'docx' %}
+					  <td>
+						  <img src="assets/images/docx-24px.png">
+					  </td>
+					{% elseif p.extension == 'pdf' %}
+					  <td>
+						  <img src="assets/images/pdf-24px.png">
+					  </td>
+					{% else %}
+						<td>
+							<img src="assets/images/text-24px.png">
+						</td>
+					{% endif %}
+
                   <td>{{p.name}}</td>
                   <td>{{p.author}}</td>
                   <td>{{p.size}} KB</td>

@@ -10,10 +10,27 @@
 {% endblock pageheader %}
 
 {% block main %}
-    <section class="row">
+    <section class="row" onload="initialise()">
         <div class="col-md-offset-2 col-md-10">
 			<form action="#" method="post" enctype="multipart/form-data">
-				<input type="file" name="file_to_upload" accept=".txt, .docx">
+				{% block javascripts %}
+					<script src="assets/js/upload.js"></script>
+				{% endblock %}
+
+				{% if saved == TRUE %}
+					<p class="bg-success">Saved</p>
+				{% endif %}
+
+				Category:
+				<select id="categories" name="categories" onChange="chooseUploadCategory()">
+					<option value="apps">Apps</option>
+					<option value="data">Data</option>
+					<option value="publication">Publication</option>
+					<option value="source-code">Source code</option>
+				</select>
+				Available data type: <span id="allowedExtensions"></span><br><br>
+
+				<input type="file" name="file_to_upload" accept=".apk, .ipa, .xlsx, .docx, .pdf, .txt, .zip">
 				Author: <input type="text" name="author"><br>
 				Publication Year: <input type="text" name="publication-year"><br>
 				Description:
@@ -28,7 +45,6 @@
         </div>
     </section>
 {% endblock main %}
-
 
 {% block pagefooter %}
 {% endblock pagefooter %}

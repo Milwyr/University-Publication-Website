@@ -17,7 +17,7 @@
 	 	*/
 	 	public function handle($context)
 	 	{
-	 		$publications = R::findall('publication');
+	 		$publications = R::find('file', 'category = "publication"');
 	 		$context->local()->addval('publications', $publications);
 	 		return 'publication.twig';
 	    }
