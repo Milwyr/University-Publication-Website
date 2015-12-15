@@ -3,16 +3,16 @@
 {% import 'form.twig' as f %}
 
 {% block title %}
-	{{context.user.login}} Upload
+    {{context.user.login}} Upload
 {% endblock title %}
 
 {% block pageheader %}
 {% endblock pageheader %}
 
 {% block main %}
-    <section class="row" onload="initialise()">
-        <div class="col-md-offset-2 col-md-10">
-			<form action="#" method="post" enctype="multipart/form-data">
+	<div class="container">
+		<form action="#" method="post" enctype="multipart/form-data">
+			<div class="form-group">
 				{% block javascripts %}
 					<script src="assets/js/upload.js"></script>
 				{% endblock %}
@@ -21,29 +21,44 @@
 					<p class="bg-success">Saved</p>
 				{% endif %}
 
-				Category:
+				<p><b>Choose a category</b></p>
 				<select id="categories" name="categories" onChange="chooseUploadCategory()">
 					<option value="apps">Apps</option>
 					<option value="data">Data</option>
 					<option value="publication">Publication</option>
 					<option value="source-code">Source code</option>
 				</select>
-				Available data type: <span id="allowedExtensions"></span><br><br>
-
-				<input type="file" name="file_to_upload" accept=".apk, .ipa, .xlsx, .docx, .pdf, .txt, .zip">
-				Author: <input type="text" name="author"><br>
-				Publication Year: <input type="text" name="publication-year"><br>
-				Description:
-				<textarea rows="5" cols="50" name="description">
-				</textarea><br>
-				Restriction: <input type="text" name="restriction"><br>
-				Information about the user:
-				<textarea rows="5" cols="50" name="author-information">
-                </textarea><br>
-				<button type="submit" class="btn btn-primary btn-lg">Upload</button>
-			</form>
-        </div>
-    </section>
+			</div>
+			<div class="form-group">
+				<p><b>Choose a file to upload</b></p>
+				<p><input type="file" name="file_to_upload" accept=".apk, .ipa, .xlsx, .docx, .pdf, .txt, .zip"></p>
+				<p><font color="red">Available extensions: <span id="allowedExtensions"></span></font></p>
+			</div>
+			<div class="form-group">
+				<p><b>Author</b></p>
+				<input type="text" name="author">
+			</div>
+			<div class="form-group">
+				<p><b>Publication Year</b></p>
+				<select name="publication-year" id="yearpicker"></select>
+			</div>
+			<div class="form-group">
+				<p><b>Description</b></p>
+				<textarea rows="5" cols="50" name="description"></textarea>
+			</div>
+			<div class="form-group">
+				<p><b>Restriction</b></p>
+				<input type="text" name="restriction"><br>
+			</div>
+			<div>
+				<p><b>Information about the user</b></p>
+				<textarea rows="3" cols="50" name="author-information"></textarea>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-md">Upload</button>
+			</div>
+		</form>
+	</div>
 {% endblock main %}
 
 {% block pagefooter %}

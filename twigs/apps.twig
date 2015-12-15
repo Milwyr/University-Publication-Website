@@ -3,7 +3,7 @@
 {% import 'form.twig' as f %}
 
 {% block title %}
-    {{context.user.login}}'s publication
+    {{context.user.login}}'s apps
 {% endblock title %}
 
 {% block pageheader %}
@@ -11,12 +11,12 @@
 
 {% block main %}
     <div class="container">
-        <h2>Publication List</h2>
+        <h2>Apps List</h2>
         <table class="table">
             <thead>
                 <tr>
                     <th></th>
-                    <th>Publication Name</th>
+                    <th>App Name</th>
                     <th>Author</th>
                     <th>Size</th>
                     <th>Year</th>
@@ -25,13 +25,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% for p in publications %}
+                {% for a in apps %}
                     <tr>
-                        {% if p.extension == 'docx' %}
+                        {% if a.extension == 'docx' %}
                             <td>
                                 <img src="assets/images/docx-24px.png">
                             </td>
-                        {% elseif p.extension == 'pdf' %}
+                        {% elseif a.extension == 'pdf' %}
                             <td>
                                 <img src="assets/images/pdf-24px.png">
                             </td>
@@ -41,13 +41,13 @@
                             </td>
                         {% endif %}
 
-                        <td>{{p.name}}</td>
-                        <td>{{p.author}}</td>
-                        <td>{{p.size}} KB</td>
-                        <td>{{p.year}}</td>
-                        <td>{{p.restriction}}</td>
+                        <td>{{a.name}}</td>
+                        <td>{{a.author}}</td>
+                        <td>{{a.size}} KB</td>
+                        <td>{{a.year}}</td>
+                        <td>{{a.restriction}}</td>
                         <td>
-                            <a href="{{p.directory}}{{p.name}}" download>
+                            <a href="{{a.directory}}{{a.name}}" download>
                                 <img src="assets/images/download-24px.png">
                             </a>
                         </td>

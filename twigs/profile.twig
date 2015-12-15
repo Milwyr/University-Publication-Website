@@ -3,7 +3,7 @@
 {% import 'form.twig' as f %}
 
 {% block title %}
-	{{context.user.login}} Profile
+    {{context.user.login}} Profile
 {% endblock title %}
 
 {% block pageheader %}
@@ -12,14 +12,17 @@
 {% block main %}
     <section class="row">
         <div class="col-md-offset-2 col-md-10">
-			<h2>{{context.user.login}}</h2>
-			{% if done is defined %}
-				<p class="bg-success">Saved</p>
-			{% endif %}
-			<form action="#" method="post">
-				{{f.email({label: 'Email', name: 'email', value: context.user.email, ph: 'Your email address', required: 1})}}
-				<button type="submit" class="btn btn-primary btn-lg">Update</button>
-			</form>
+            {% if done is defined %}
+                <p class="bg-success">Saved</p>
+            {% endif %}
+            <form action="#" method="post">
+                <div class="row text-center">
+					<img src="assets/images/avatar-128px.png">
+				</div>
+                <div class="row text-center"><h1>{{context.user.login}}</h1></div>
+                        {{f.email({label: 'Email', name: 'email', value: context.user.email, ph: 'Your email address', required: 1})}}
+                <button type="submit" class="btn btn-primary btn-lg">Update</button>
+            </form>
         </div>
     </section>
 {% endblock main %}
