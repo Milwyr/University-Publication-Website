@@ -3,7 +3,7 @@
 {% import 'form.twig' as f %}
 
 {% block title %}
-	{{context.user.login}} Documentation
+	{{context.user.login}}'s' publication
 {% endblock title %}
 
 {% block pageheader %}
@@ -11,11 +11,12 @@
 
 {% block main %}
         <div class="container">
-          <h2>Documentations</h2>
+          <h2>Publication List</h2>
           <table class="table">
             <thead>
               <tr>
-                <th>Document Name</th>
+			  	<th></th>
+                <th>Publication Name</th>
                 <th>Author</th>
                 <th>Size</th>
                 <th>Year</th>
@@ -24,15 +25,29 @@
               </tr>
             </thead>
             <tbody>
-              {% for d in documents %}
+              {% for p in publications %}
                 <tr>
-                  <td>{{d.name}}</td>
-                  <td>{{d.author}}</td>
-                  <td>{{d.size}} KB</td>
-                  <td>{{d.year}}</td>
-                  <td>{{d.restriction}}</td>
+					{% if p.extension == 'docx' %}
+					  <td>
+						  <img src="assets/images/docx-24px.png">
+					  </td>
+					{% elseif p.extension == 'pdf' %}
+					  <td>
+						  <img src="assets/images/pdf-24px.png">
+					  </td>
+					{% else %}
+						<td>
+							<img src="assets/images/text-24px.png">
+						</td>
+					{% endif %}
+
+                  <td>{{p.name}}</td>
+                  <td>{{p.author}}</td>
+                  <td>{{p.size}} KB</td>
+                  <td>{{p.year}}</td>
+                  <td>{{p.restriction}}</td>
                   <td>
-                    <a href="{{d.directory}}{{d.name}}" download>
+                    <a href="{{p.directory}}{{p.name}}" download>
 						<img src="assets/images/download-24px.png">
 					</a>
                   </td>

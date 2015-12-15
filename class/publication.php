@@ -1,12 +1,12 @@
 <?php
 	/**
-	 * This class provides an implementation for uploading documents
+	 * This class shows a list of publications
 	 *
 	 * @author Milton Li <m.li24@ncl.ac.uk>
 	 * @copyright 2015-2016 Newcastle University
 	 *
 	 */
-	 class Documentations extends Siteaction
+	 class Publication extends Siteaction
 	 {
 		/**
 	 	* Handle profile operations /documentations/xxxx
@@ -17,9 +17,9 @@
 	 	*/
 	 	public function handle($context)
 	 	{
-	 		$documents = R::findall('file');
-	 		$context->local()->addval('documents',$documents);
-	 		return 'documentations.twig';
+	 		$publications = R::find('file', 'category = "publication"');
+	 		$context->local()->addval('publications', $publications);
+	 		return 'publication.twig';
 	    }
 	}
 ?>

@@ -18,46 +18,60 @@
 	 	public function handle($context)
 	 	{
 	 		// A file has been selected to upload
-			if (!empty($_FILES['file_to_upload']['name']))
+			if (!empty($_FILES['file_to_upload']['name']) and !empty($_POST['categories']) and
+				!empty($_POST["publication-year"]) and !empty($_POST["author"]))
 			{
-	        	$allowedExtensions = array('docx', 'pdf', 'txt');
+				$allowedExtensions = $this->getAllowedExtensions($_POST['categories']);
 	        	$extensions = explode('.', $_FILES['file_to_upload']['name']);
 	        	$extension = end($extensions);
-	        	
-	        	if (!in_array($extension, $allowedExtensions))
-	        	{
-	        		echo 'Wrong file type';
-				}
-				else
-				{
-					if (!empty($year = $_POST["publication-year"]) and (!empty($author = $_POST["author"])))
-					{
-						$target_directory = "assets/upload/".$author."/".$year."/";
-					}
-	
-	                if (!file_exists($target_directory))
-	                {
-	                	mkdir($target_directory, 0777, true);
-	                }
-	
-	                $target_file_path = $target_directory.basename($_FILES['file_to_upload']['name']);
-	                
-	                move_uploaded_file($_FILES['file_to_upload']['tmp_name'], $target_file_path);
-	
-					$ufile = R::dispense('file');
-					$ufile->directory = $target_directory;
-					$ufile->name = $_FILES['file_to_upload']['name'];
-					$ufile->author = $_POST['author'];
-					$ufile->year = $_POST['publication-year'];
-					$ufile->description = $_POST['description'];
-					$ufile->restriction = $_POST['restriction'];
-					$ufile->information = $_POST['author-information'];
-					$ufile->size = $_FILES['file_to_upload']['size']/1024; // File size in kB
-					$ufid = R::store($ufile);
+				$target_directory = "assets/upload/".$_POST["author"]."/".$_POST['publication-year']."/";
+
+	            if (!file_exists($target_directory))
+	            {
+	                mkdir($target_directory, 0777, true);
 	            }
+
+	            $target_file_path = $target_directory.basename($_FILES['file_to_upload']['name']);
+
+	            move_uploaded_file($_FILES['file_to_upload']['tmp_name'], $target_file_path);
+
+				$upload_file = R::dispense('file');
+				$upload_file->category = $_POST['categories'];
+				$upload_file->directory = $target_directory;
+				$upload_file->name = $_FILES['file_to_upload']['name'];
+				$upload_file->author = $_POST['author'];
+				$upload_file->year = $_POST['publication-year'];
+				$upload_file->description = $_POST['description'];
+				$upload_file->restriction = $_POST['restriction'];
+				$upload_file->information = $_POST['author-information'];
+				$upload_file->size = $_FILES['file_to_upload']['size']/1024; // File size in kB
+				$upload_file->extension = $extension;
+				$upid = R::store($upload_file);
+
+				$context->local()->addval('saved', TRUE);
 	        }
-	
-	            return 'upload.twig';
+
+	        return 'upload.twig';
 	    }
+
+		function getAllowedExtensions($category)
+		{
+			if ($category == 'apps')
+			{
+				return array('apk', 'ipa');
+			}
+			elseif ($category == 'data')
+			{
+				return array('xlsx', 'zip');
+			}
+			elseif ($category == 'publication')
+			{
+				return array('docx', 'pdf', 'txt');
+			}
+			else
+			{
+				return array('rar', 'zip');
+			}
+		}
 	}
 ?>
