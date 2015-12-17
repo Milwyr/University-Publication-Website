@@ -46,6 +46,15 @@
                         <td>{{a.size}} KB</td>
                         <td>{{a.year}}</td>
                         <td>{{a.restriction}}</td>
+						<td>
+							<script>
+								function showDescriptionModal() {
+									$("#descriptionmodalbody").text('{{a.description}}');
+									$("#description").modal();
+								}
+							</script>
+							<button type="button" id="descriptionbutton" class="btn btn-info" onclick="showDescriptionModal();">Description</button>
+                        </td>
                         <td>
                             <a href="{{a.directory}}{{a.name}}" download>
                                 <img src="assets/images/download-24px.png">
@@ -56,6 +65,25 @@
             </tbody>
         </table>
     </div>
+	<!-- Modal -->
+	<div class="modal fade" id="description" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Description</h4>
+				</div>
+				<div class="modal-body">
+					<p id="descriptionmodalbody"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
 {% endblock main %}
 
 {% block pagefooter %}
