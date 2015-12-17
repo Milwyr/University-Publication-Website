@@ -11,7 +11,7 @@
 
 {% block main %}
 	<div class="container">
-		<form action="#" method="post" enctype="multipart/form-data">
+		<form id="uploadform" action="#" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				{% block javascripts %}
 					<script src="assets/js/upload.js"></script>
@@ -36,26 +36,26 @@
 			</div>
 			<div class="form-group">
 				<p><b>Author</b></p>
-				<input type="text" name="author">
+				<input id="author" type="text" name="author">
 			</div>
 			<div class="form-group">
 				<p><b>Publication Year</b></p>
-				<select name="publication-year" id="yearpicker"></select>
+				<select id="yearpicker" name="publication-year"></select>
 			</div>
 			<div class="form-group">
 				<p><b>Description</b></p>
-				<textarea rows="5" cols="50" name="description"></textarea>
+				<textarea id="description" name="description" rows="5" cols="50"></textarea>
 			</div>
 			<div class="form-group">
 				<p><b>Restriction</b></p>
-				<input type="text" name="restriction"><br>
+				<input id="restriction" name="restriction" type="text"><br>
 			</div>
 			<div>
 				<p><b>Information about the user</b></p>
-				<textarea rows="3" cols="50" name="author-information"></textarea>
+				<textarea id="author-information" name="author-information" rows="3" cols="50"></textarea>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-md">Upload</button>
+				<button id="uploadbutton" type="submit" class="btn btn-primary btn-md" onclick="uploadButtonClick();">Upload</button>
 			</div>
 		</form>
 	</div>

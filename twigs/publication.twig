@@ -26,7 +26,7 @@
             </thead>
             <tbody>
                 {% for p in publications %}
-                    <tr>
+                    <tr valign="middle">
                         {% if p.extension == 'docx' %}
                             <td>
                                 <img src="assets/images/docx-24px.png">
@@ -46,8 +46,18 @@
                         <td>{{p.size}} KB</td>
                         <td>{{p.year}}</td>
                         <td>{{p.restriction}}</td>
+						<td>
+							<script>
+								function showDescriptionModal() {
+									$("#descriptionmodalbody").text('{{p.description}}');
+									$("#description").modal();
+								}
+							</script>
+							<button type="button" id="descriptionbutton" class="btn btn-info" onclick="showDescriptionModal();">Description</button>
+                        </td>
                         <td>
                             <a href="{{p.directory}}{{p.name}}" download>
+								<a href="description_modal.twig"></a>
                                 <img src="assets/images/download-24px.png">
                             </a>
                         </td>
@@ -55,8 +65,26 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-{% endblock main %}
+		<!-- Modal -->
+		<div class="modal fade" id="description" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Description</h4>
+					</div>
+					<div class="modal-body">
+						<p id="descriptionmodalbody"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
 
-{% block pagefooter %}
-{% endblock pagefooter %}
+			</div>
+		</div>
+	{% endblock main %}
+
+	{% block pagefooter %}
+	{% endblock pagefooter %}
