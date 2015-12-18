@@ -17,7 +17,9 @@
 	 	*/
 	 	public function handle($context)
 	 	{
-	 		$publications = R::find('file', 'category = "publication"');
+//			$appsBeans = R::find('file', 'category = "source-code"');
+//			R::trashAll($appsBeans);
+			$publications = R::find('file', 'category = "publication"');
 	 		$context->local()->addval('publications', $publications);
 	 		return 'publication.twig';
 	    }
