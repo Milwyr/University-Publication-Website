@@ -18,6 +18,7 @@
 	 	public function handle($context)
 	 	{
 	 		$apps = R::find('file', 'category = "apps"');
+//			R::trashAll($apps);
 	 		$context->local()->addval('apps', $apps);
 	 		return 'apps.twig';
 	    }

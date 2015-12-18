@@ -24,6 +24,7 @@ class Upload extends Siteaction {
 		// A file has been selected to upload
 		if (!empty($_FILES['file_to_upload']['name']) and ! empty($categories) and ! empty($publication_year) and ! empty($author)) {
 			$file_to_upload = $_FILES['file_to_upload']['name'];
+			$file_size = $_FILES['file_to_upload']['size'];
 
 			$target_directory = "assets/upload/" . $author . "/" . $publication_year . "/";
 			if (!file_exists($target_directory)) {
@@ -51,7 +52,7 @@ class Upload extends Siteaction {
 				$upload_file->description = $context->mustpostpar('description', '');
 				$upload_file->restriction = $context->mustpostpar('restriction', '');
 				$upload_file->information = $context->mustpostpar('author-information', '');
-				$upload_file->size = $file_to_upload / 1024; // File size in kB
+				$upload_file->size = $file_size / 1024; // File size in kB
 				$upload_file->extension = $extension;
 				R::store($upload_file);
 
@@ -70,8 +71,10 @@ class Upload extends Siteaction {
 		} elseif ($category === 'publication') {
 			return array('docx', 'pdf', 'txt');
 		} else {
-			return array('rar', 'zip');
+			return array('7z', 'rar', 'zip');
 		}
 	}
 
 }
+
+?>

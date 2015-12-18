@@ -29,15 +29,19 @@
                     <tr valign="middle">
                         {% if p.extension == 'docx' %}
                             <td>
-                                <img src="assets/images/docx-24px.png">
+                                <img src="assets/images/docx-32px.png">
                             </td>
                         {% elseif p.extension == 'pdf' %}
                             <td>
-                                <img src="assets/images/pdf-24px.png">
+                                <img src="assets/images/pdf-32px.png">
+                            </td>
+						{% elseif p.extension == 'txt' %}
+                            <td>
+                                <img src="assets/images/txt-32px.png">
                             </td>
                         {% else %}
                             <td>
-                                <img src="assets/images/text-24px.png">
+                                <img src="assets/images/text-32px.png">
                             </td>
                         {% endif %}
 

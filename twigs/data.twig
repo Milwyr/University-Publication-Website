@@ -27,17 +27,17 @@
             <tbody>
                 {% for d in data %}
                     <tr>
-                        {% if d.extension == 'docx' %}
+                        {% if d.extension == 'xlsx' %}
                             <td>
-                                <img src="assets/images/docx-24px.png">
+                                <img src="assets/images/xlsx-32px.png">
                             </td>
-                        {% elseif d.extension == 'pdf' %}
+                        {% elseif d.extension == 'zip' %}
                             <td>
-                                <img src="assets/images/pdf-24px.png">
+                                <img src="assets/images/zip-32px.png">
                             </td>
                         {% else %}
                             <td>
-                                <img src="assets/images/text-24px.png">
+                                <img src="assets/images/zip-32px.png">
                             </td>
                         {% endif %}
 
