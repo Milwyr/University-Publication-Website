@@ -29,7 +29,7 @@ function getAcceptedExtensions(selectedCategory) {
 	} else if (selectedCategory === "publication") {
 		return '.docx, .pdf, .txt';
 	} else if (selectedCategory === "source-code") {
-		return '.rar, .zip';
+		return '.7z, .rar, .zip';
 	}
 }
 

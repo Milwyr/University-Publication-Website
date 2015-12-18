@@ -1,77 +1,80 @@
 <?php
+
+/**
+ * This class provides an implementation for uploading documents
+ *
+ * @author Milton Li <m.li24@ncl.ac.uk>
+ * @copyright 2015-2016 Newcastle University
+ *
+ */
+class Upload extends Siteaction {
+
 	/**
-	 * This class provides an implementation for uploading documents
+	 * Handle profile operations /upload/xxxx
 	 *
-	 * @author Milton Li <m.li24@ncl.ac.uk>
-	 * @copyright 2015-2016 Newcastle University
+	 * @param object	$context	The context object for the site
 	 *
+	 * @return string	A template name
 	 */
-	 class Upload extends Siteaction
-	 {
-		/**
-	 	* Handle profile operations /upload/xxxx
-	 	*
-	 	* @param object	$context	The context object for the site
-	 	*
-	 	* @return string	A template name
-	 	*/
-	 	public function handle($context)
-	 	{
-	 		// A file has been selected to upload
-			if (!empty($_FILES['file_to_upload']['name']) and !empty($_POST['categories']) and
-				!empty($_POST["publication-year"]) and !empty($_POST["author"]))
-			{
-				$allowedExtensions = $this->getAllowedExtensions($_POST['categories']);
-	        	$extensions = explode('.', $_FILES['file_to_upload']['name']);
-	        	$extension = end($extensions);
-				$target_directory = "assets/upload/".$_POST["author"]."/".$_POST['publication-year']."/";
+	public function handle($context) {
+		$categories = $context->mustpostpar('categories', '');
+		$publication_year = $context->mustpostpar('publication-year', '');
+		$author = $context->mustpostpar('author', '');
 
-	            if (!file_exists($target_directory))
-	            {
-	                mkdir($target_directory, 0777, true);
-	            }
+		// A file has been selected to upload
+		if (!empty($_FILES['file_to_upload']['name']) and ! empty($categories) and ! empty($publication_year) and ! empty($author)) {
+			$file_to_upload = $_FILES['file_to_upload']['name'];
+			$file_size = $_FILES['file_to_upload']['size'];
 
-	            $target_file_path = $target_directory.basename($_FILES['file_to_upload']['name']);
+			$target_directory = "assets/upload/" . $author . "/" . $publication_year . "/";
+			if (!file_exists($target_directory)) {
+				mkdir($target_directory, 0777, true);
+			}
 
-	            move_uploaded_file($_FILES['file_to_upload']['tmp_name'], $target_file_path);
+			$allowedExtensions = $this->getAllowedExtensions($categories);
+			$extensions = explode('.', $file_to_upload);
+			$extension = end($extensions);
+
+			if (!in_array($extension, $allowedExtensions)) {
+				$context->local()->message('errmessage', 'Please choose a file with the correct extension.');
+			}
+			else {
+				$target_file_path = $target_directory . basename($file_to_upload);
+
+				move_uploaded_file($file_to_upload, $target_file_path);
 
 				$upload_file = R::dispense('file');
-				$upload_file->category = $_POST['categories'];
+				$upload_file->category = $categories;
 				$upload_file->directory = $target_directory;
-				$upload_file->name = $_FILES['file_to_upload']['name'];
-				$upload_file->author = $_POST['author'];
-				$upload_file->year = $_POST['publication-year'];
-				$upload_file->description = $_POST['description'];
-				$upload_file->restriction = $_POST['restriction'];
-				$upload_file->information = $_POST['author-information'];
-				$upload_file->size = $_FILES['file_to_upload']['size']/1024; // File size in kB
+				$upload_file->name = $file_to_upload;
+				$upload_file->author = $author;
+				$upload_file->year = $context->mustpostpar('publication-year', '');
+				$upload_file->description = $context->mustpostpar('description', '');
+				$upload_file->restriction = $context->mustpostpar('restriction', '');
+				$upload_file->information = $context->mustpostpar('author-information', '');
+				$upload_file->size = $file_size / 1024; // File size in kB
 				$upload_file->extension = $extension;
-				$upid = R::store($upload_file);
+				R::store($upload_file);
 
 				$context->local()->addval('saved', TRUE);
-	        }
-
-	        return 'upload.twig';
-	    }
-
-		function getAllowedExtensions($category)
-		{
-			if ($category == 'apps')
-			{
-				return array('apk', 'ipa');
-			}
-			elseif ($category == 'data')
-			{
-				return array('xlsx', 'zip');
-			}
-			elseif ($category == 'publication')
-			{
-				return array('docx', 'pdf', 'txt');
-			}
-			else
-			{
-				return array('rar', 'zip');
 			}
 		}
+
+		return 'upload.twig';
 	}
+
+	function getAllowedExtensions($category) {
+		if ($category === 'apps') {
+			return array('apk', 'ipa');
+		} elseif ($category === 'data') {
+			return array('xlsx', 'zip');
+		} elseif ($category === 'publication') {
+			return array('docx', 'pdf', 'txt');
+		} else {
+			return array('7z', 'rar', 'zip');
+		}
+	}
+
+}
+
 ?>

@@ -11,7 +11,16 @@
 
 {% block main %}
     <div class="container">
-        <h2>Source Code</h2>
+        <form class="navbar-form navbar-right" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<input name="sourcecode_search_text" type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<button name="sourcecode_search_button" type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+			</div>
+		</form>
+
+		<h2>Source Code</h2>
         <table class="table">
             <thead>
                 <tr>
@@ -27,17 +36,17 @@
             <tbody>
                 {% for s in sourcecode %}
                     <tr>
-                        {% if s.extension == 'docx' %}
+                        {% if s.extension == '7z' %}
                             <td>
-                                <img src="assets/images/docx-24px.png">
+                                <img src="assets/images/7z-32px.png">
                             </td>
-                        {% elseif s.extension == 'pdf' %}
+                        {% elseif s.extension == 'rar' %}
                             <td>
-                                <img src="assets/images/pdf-24px.png">
+                                <img src="assets/images/rar-32px.png">
                             </td>
                         {% else %}
                             <td>
-                                <img src="assets/images/text-24px.png">
+                                <img src="assets/images/zip-32px.png">
                             </td>
                         {% endif %}
 

@@ -21,6 +21,8 @@
 					<p class="bg-success">Saved</p>
 				{% endif %}
 
+				{% include 'message.twig'%}
+				
 				<p><b>Choose a category</b></p>
 				<select id="categories" name="categories" onChange="chooseUploadCategory()">
 					<option value="apps">Apps</option>
